@@ -4,12 +4,12 @@ var path = require('path'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
     config = require('./config'),
-    listingsRouter = require('../routes/listings.server.routes'), 
+    listingsRouter = require('../routes/listings.server.routes.js'), 
     getCoordinates = require('../controllers/coordinates.server.controller.js');
 
 module.exports.init = function() {
   //connect to database
-  mongoose.connect(config.db.uri, { useNewUrlParser: true });
+  mongoose.connect(config.db.uri, { useNewUrlParser: true, useUnifiedTopology: true });
     mongoose.set('useCreateIndex', true);
     mongoose.set('useFindAndModify', false);
 
@@ -32,7 +32,7 @@ module.exports.init = function() {
      use the listings router middleware for requests to the api 
      check the variables list above
   */
-  app.use('/api/listings');
+  app.use('/api/listings', listingsRouter);
 
 
    /* Request Handler for coordinates
@@ -45,7 +45,8 @@ module.exports.init = function() {
   /* Request Handeler for all other routes
      Sends a response (res) to go to the homepage for all routes not specified */ 
   app.all('/*', function(req, res) {
-   
+	app.use(express.static('client'));
+	
    /*Add YOUR CODE HERE 
       see https://expressjs.com/en/api.html#res.sendFile
       see https://nodejs.org/api/path.html
@@ -54,6 +55,5 @@ module.exports.init = function() {
    */
    //res.sendFile(path.resolve(...));
   });
-  
   return app;
 };  

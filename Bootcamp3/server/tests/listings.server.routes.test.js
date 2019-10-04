@@ -29,6 +29,7 @@ describe('Listings CRUD tests', function() {
         done();
       });
   });
+
   it('should be able to retrieve a single listing', function(done) {
     Listing.findOne({name: 'Library West'}, function(err, listing) {
       if(err) {
@@ -116,6 +117,7 @@ describe('Listings CRUD tests', function() {
   You can comment the two coordinate tests until you have completed the code the 
   coordinates.server.controlelr.js file 
 */
+
   it('should be able to save a listing with coordinates', function(done) {
     var listing2 = {
       code: 'GMC', 
@@ -152,6 +154,7 @@ describe('Listings CRUD tests', function() {
           });
       })
   });
+
 
   after(function(done) {
     if(id) {
